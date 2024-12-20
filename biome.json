@@ -1,0 +1,35 @@
+{
+  "formatter": {
+    "indentStyle": "tab",
+    "lineWidth": 120
+  },
+  "organizeImports": { "enabled": true },
+  "linter": {
+    "rules": {
+      "recommended": true,
+      "correctness": {
+        "noUnusedImports": "warn"
+      },
+      "suspicious": {
+        "noExplicitAny": "error",
+        "noConsoleLog": "off"
+      },
+      "style": {
+        "noUselessElse": "warn",
+        "noNonNullAssertion": "error",
+        "useNamingConvention": "error"
+      },
+      "complexity": {
+        "noForEach": "warn"
+      }
+    }
+  },
+  "json": {
+    "formatter": {
+      "enabled": false
+    }
+  },
+  "files": {
+    "ignore": ["src/components/ui/**/*.tsx", "src/hooks/use-toast.ts"]
+  }
+}
