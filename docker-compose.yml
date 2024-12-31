@@ -19,7 +19,7 @@ services:
     environment:
       - NODE_ENV=production
       - PORT=3001
-      - DATABASE_URL=postgresql://USERNAME:PASSWORD@192.168.1.67:5432/mydb?schema=public
+      - DATABASE_URL=postgresql://USERNAME:PASSWORD@postgres:5432/mydb?schema=public
     ports:
       - "3001:3001"
     depends_on:
