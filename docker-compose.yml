@@ -15,7 +15,13 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+      args:
+        POSTGRES_USER: USERNAME
+        POSTGRES_PASSWORD: PASSWORD
     restart: always
+    environment:
+      - NODE_ENV=production
+      - PORT=3001
     ports:
       - "3001:3001"
     depends_on:
