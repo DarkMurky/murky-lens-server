@@ -15,14 +15,11 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-      args:
-        POSTGRES_USER: USERNAME
-        POSTGRES_PASSWORD: PASSWORD
-        DB_HOST: postgres
     restart: always
     environment:
       - NODE_ENV=production
       - PORT=3001
+      - DATABASE_URL=postgresql://USERNAME:PASSWORD@192.168.1.67:5432/mydb?schema=public
     ports:
       - "3001:3001"
     depends_on:
