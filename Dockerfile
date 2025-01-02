@@ -10,8 +10,6 @@ RUN npm ci
 
 RUN npm run build
 
-RUN npm run prisma-migrate-prod
-
 EXPOSE ${PORT}
 
 CMD npm run prisma-migrate-prod && npm run start
