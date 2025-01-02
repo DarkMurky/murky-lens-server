@@ -47,6 +47,10 @@ jobs:
       - name: View PostgreSQL logs
         run: docker logs $(docker ps -q --filter "name=postgres")
 
+      - name: Verify database and user
+        run: |
+          psql -h postgres -U USERNAME -d mydb -c '\l'
+
       - name: Log in to Docker Hub
         uses: docker/login-action@v2
         with:
