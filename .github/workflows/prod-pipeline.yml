@@ -3,7 +3,7 @@ name: Build and Push Docker Image
 on:
   push:
     branches:
-      - dev
+      - main
 
 jobs:
   build:
@@ -17,7 +17,7 @@ jobs:
         run: |
           echo "NODE_ENV=production" >> .env
           echo "PORT=3001" >> .env
-          echo "DATABASE_URL=postgresql://USERNAME:PASSWORD@postgres:5432/mydb?schema=public" >> .env
+          echo "DATABASE_URL=postgresql://${{ secrets.POSTGRES_USER }}:${{ secrets.POSTGRES_PASSWORD }}@postgres:5432/mydb?schema=public" >> .env
 
       - name: Log in to Docker Hub
         uses: docker/login-action@v2
