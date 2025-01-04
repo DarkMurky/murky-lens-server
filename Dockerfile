@@ -4,14 +4,12 @@ WORKDIR /usr/src/app
 
 RUN apt-get update -y && apt-get install -y openssl && apt-get clean
 
-COPY package*.json ./
+COPY . .
 
 RUN npm ci
 
-COPY . .
-
 RUN npm run build
 
-EXPOSE 3001
+EXPOSE ${PORT}
 
-CMD npm run prisma-migrate && npm run prisma-migrate-prod && npm run start
+CMD npm run prisma-migrate-prod && npm run start
