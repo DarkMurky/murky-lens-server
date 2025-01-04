@@ -28,8 +28,8 @@ jobs:
 
       - name: Build Docker image
         run: |
-          docker build -t kvait/murky-manager-server-app:dev .
+          docker build -t kvait/murky-manager-server-app:latest .
 
       - name: Push Docker image
         run: |
-          docker push kvait/murky-manager-server-app:dev
+          docker push kvait/murky-manager-server-app:latest
