@@ -12,8 +12,9 @@ jobs:
     env:
       DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
       DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
-      DOCKER_REPOSITORY: murky-manager-server-app
+      DOCKER_REPOSITORY: ${{ secrets.DOCKER_REPOSITORY }}
       DOCKER_TAG: dev
+      DOCKER_IMAGE: ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.DOCKER_REPOSITORY }}
       DEV_AWS_EKS_CLUSTER_NAME: ${{ secrets.DEV_AWS_EKS_CLUSTER_NAME }}
 
     steps:
@@ -32,9 +33,6 @@ jobs:
           registry: docker.io
           username: ${{ env.DOCKERHUB_USERNAME }}
           password: ${{ env.DOCKERHUB_TOKEN }}
-
-      - name: Set Docker Image
-        run: echo "DOCKER_IMAGE=${{ secrets.DOCKERHUB_USERNAME }}/${{ env.DOCKER_REPOSITORY }}" >> $GITHUB_ENV
 
       - name: Build Docker image
         run: |
