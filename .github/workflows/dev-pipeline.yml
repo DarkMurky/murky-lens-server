@@ -68,7 +68,7 @@ jobs:
 
       - name: Deploy with Helm
         run: |
-          helm upgrade --install dev-lens-view ./k8s/murky-view-chart -f values-dev.yaml
+          helm upgrade --install dev-lens-view ./k8s/murky-view-chart -f values-dev.yml
 
       - name: Install Ingress NGINX
         run: |
