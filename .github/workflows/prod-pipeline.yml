@@ -29,7 +29,7 @@ jobs:
 
       - name: Create .env file
         run: |
-          echo "NODE_ENV=development" >> .env
+          echo "NODE_ENV=prod" >> .env
           echo "PORT=3001" >> .env
           POSTGRES_USER=$(echo "${{ secrets.POSTGRES_USER }}" | base64 --decode)
           POSTGRES_PASSWORD=$(echo "${{ secrets.POSTGRES_PASSWORD }}" | base64 --decode)
@@ -81,7 +81,7 @@ jobs:
       - name: Terraform plan
         working-directory: ./k8s/terraform
         run: |
-          terraform plan
+          terraform plan -var="environment=${{ env.ENVIRONMENT }}
 
       - uses: trstringer/manual-approval@v1
         with:
