@@ -81,7 +81,7 @@ jobs:
       - name: Terraform plan
         working-directory: ./k8s/terraform
         run: |
-          terraform plan
+          terraform plan -var="environment=${{ env.ENVIRONMENT }}
 
       - uses: trstringer/manual-approval@v1
         with:
