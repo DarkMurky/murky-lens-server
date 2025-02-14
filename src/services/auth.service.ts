@@ -50,7 +50,7 @@ export async function signRefreshToken(id: number) {
 		{
 			session: id,
 		},
-		"refreshTokenPrivateKey",
+		"REFRESH_PRIVATE_KEY",
 		{
 			expiresIn: "1y",
 		},
@@ -62,7 +62,7 @@ export function signAccessToken(user: Prisma.UserCreateInput) {
 	const { password: userPassword, ...userWithoutPassword } = user;
 
 	const payload = user;
-	const accessToken = signJwt(payload, "accessTokenPrivateKey", {
+	const accessToken = signJwt(payload, "ACCESS_TOKEN_PRIVATE_KEY", {
 		expiresIn: "60s",
 	});
 	return accessToken;

@@ -1,4 +1,3 @@
-import config from "config";
 import cors from "cors";
 import dotenv from "dotenv";
 import express, { type Express } from "express";
@@ -17,8 +16,7 @@ app.use(
 	}),
 );
 
-const serverPort = config.get<number>("server_port");
-const serverHost = config.get<string>("server_host");
+const serverPort = process.env.SERVER_PORT || 3001;
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
@@ -27,5 +25,5 @@ app.use(routes);
 app.use(globalErrorHandler);
 
 app.listen(serverPort, () => {
-	console.log(`[server]: Server is running at http://${serverHost}:${serverPort}`);
+	console.log(`[server]: Server is running on port: ${serverPort}`);
 });

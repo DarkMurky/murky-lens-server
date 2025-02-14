@@ -11,15 +11,15 @@ services:
     ports:
       - "5432:5432"
 
-  lens-server:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    restart: always
-    ports:
-      - "3001:3001"
-    depends_on:
-      - postgres
+  # lens-server:
+  #   build:
+  #     context: .
+  #     dockerfile: Dockerfile
+  #   restart: always
+  #   ports:
+  #     - "3001:3001"
+  #   depends_on:
+  #     - postgres
 
 volumes:
   postgres:
