@@ -23,14 +23,14 @@ const deserializeUser = async (req: Request, res: Response, next: NextFunction) 
 		updatedAt: string;
 		iat: number;
 		exp: number;
-	}>(accessToken, "accessTokenPublicKey");
+	}>(accessToken, "ACCESS_TOKEN_PUBLIC_KEY");
 
 	if (decodedAccess) {
 		res.locals.user = omit(decodedAccess, "iat", "exp", "password");
 		return next();
 	}
 
-	const decodedRefesh = verifyJwt<{ session: string }>(refreshToken, "refreshTokenPublicKey");
+	const decodedRefesh = verifyJwt<{ session: string }>(refreshToken, "REFRESH_PUBLIC_KEY");
 	if (!decodedRefesh) {
 		return next();
 	}

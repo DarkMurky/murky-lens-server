@@ -1,12 +1,11 @@
-import config from "config";
 import jwt from "jsonwebtoken";
 
 export function signJwt(
 	object: Record<string, unknown>,
-	keyName: "accessTokenPrivateKey" | "refreshTokenPrivateKey",
+	keyName: "ACCESS_TOKEN_PRIVATE_KEY" | "REFRESH_PRIVATE_KEY",
 	options?: jwt.SignOptions | undefined,
 ) {
-	const signingKey = Buffer.from(config.get<string>(keyName), "base64").toString("ascii");
+	const signingKey = Buffer.from(process.env[keyName] as string, "base64").toString("ascii");
 
 	return jwt.sign(object, signingKey, {
 		...(options && options),
@@ -14,8 +13,8 @@ export function signJwt(
 	});
 }
 
-export function verifyJwt<T>(token: string, keyName: "accessTokenPublicKey" | "refreshTokenPublicKey"): T | null {
-	const publicKey = Buffer.from(config.get<string>(keyName), "base64").toString("ascii");
+export function verifyJwt<T>(token: string, keyName: "ACCESS_TOKEN_PUBLIC_KEY" | "REFRESH_PUBLIC_KEY"): T | null {
+	const publicKey = Buffer.from(process.env[keyName] as string, "base64").toString("ascii");
 
 	try {
 		const decoded = jwt.verify(token, publicKey) as T;
