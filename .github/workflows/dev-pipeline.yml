@@ -125,11 +125,17 @@ jobs:
           echo "db-user: ${{ secrets.DATABASE_USER}}" > secrets
           echo "db-pass: ${{ secrets.DATABASE_PASSWORD }}" >> secrets
 
+      - name: Print dir
+        working-directory: ./k8s/murky-view-chart
+        run: |
+          echo "LS:"
+          ls -l
+
       - name: Print secrets file
         working-directory: ./k8s/murky-view-chart
         run: |
           echo "LS:"
-          ls -l 
+          cat secrets
 
       # - name: Deploy with Helm
       #   run: |
