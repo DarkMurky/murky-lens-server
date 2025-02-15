@@ -122,8 +122,8 @@ jobs:
       - name: Create secrets file
         working-directory: ./k8s/murky-view-chart
         run: |
-          echo "db-user: ${{ secrets.DATABASE_USER}}" > secrets
-          echo "db-pass: ${{ secrets.DATABASE_PASSWORD }}" >> secrets
+          echo "db-user: TEST1" > secrets
+          echo "db-pass: TEST2" >> secrets
 
       - name: Print dir
         working-directory: ./k8s/murky-view-chart
