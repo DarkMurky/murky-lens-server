@@ -82,6 +82,11 @@ jobs:
           version: v3.17.0
         id: install
 
+      - uses: azure/setup-kubectl@v4
+        with:
+          version: v1.32.1
+        id: install
+
       - name: Terraform init and validate
         working-directory: ./k8s/terraform
         run: |
