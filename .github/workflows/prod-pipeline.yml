@@ -75,7 +75,21 @@ jobs:
       - name: Set up Terraform
         uses: hashicorp/setup-terraform@v1
         with:
-            terraform_version: 1.10.4
+            terraform_version: 1.10.5
+        id: install_terraform
+
+      - name: Set up helm
+        uses: azure/setup-helm@v4.2.0
+        with:
+          version: v3.17.0
+        id: install_helm
+
+      - name: Setup kubectl
+        uses: azure/setup-kubectl@v4
+        with:
+          version: v1.32.1
+        id: install_kubectl
+
 
       - name: Terraform init and validate
         working-directory: ./k8s/terraform
@@ -111,9 +125,9 @@ jobs:
 
       - name: Create secrets file
         working-directory: ./k8s/murky-view-chart
-        run: |
-          echo "db-user: ${{ secrets.DATABASE_USER}}" > secrets
-          echo "db-pass: ${{ secrets.DATABASE_PASSWORD }}" >> secrets
+       run: |
+          echo "db-user: ${{ secrets.POSTGRES_USER}}" > secrets
+          echo "db-pass: ${{ secrets.POSTGRES_PASSWORD }}" >> secrets
 
       - name: Deploy with Helm
         run: |
