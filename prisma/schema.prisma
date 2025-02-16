@@ -20,3 +20,21 @@ model Lens {
   iconUrl   String
   location String
 }
+
+model User {
+  id                Int       @id @default(autoincrement())
+  email             String    @unique
+  password          String
+
+  createdAt         DateTime? @default(now())
+  updatedAt         DateTime? @default(now())
+
+  session Session[]
+}
+
+model Session {
+  id     Int     @id @default(autoincrement())
+  user   User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId Int
+  valid  Boolean @default(true)
+}
