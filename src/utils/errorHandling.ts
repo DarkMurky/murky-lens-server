@@ -22,7 +22,7 @@ const globalErrorHandler = (err: IerrorHandlingCustomError, req: Request, res: R
 		console.error("⚠️ ", err);
 
 		if (err.code === "P2025") {
-			err.message = "Record to patch not found";
+			err.message = "ecord to patch not found";
 		}
 
 		if (err.code === "P2002") {

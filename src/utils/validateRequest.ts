@@ -45,25 +45,3 @@ export const validateDeleteLens = (req: Request, schema: ZodSchema) => {
 		throw error;
 	}
 };
-
-export const validateRegister = (req: Request, schema: ZodSchema) => {
-	const zodSchema = schema;
-	const result = zodSchema.safeParse(req.body);
-	if (!result.success) {
-		const errorMessage = result.error.errors;
-		const error = createError(400, JSON.stringify(errorMessage));
-		error.isOperational = true;
-		throw error;
-	}
-};
-
-export const validateLogin = (req: Request, schema: ZodSchema) => {
-	const zodSchema = schema;
-	const result = zodSchema.safeParse(req.body);
-	if (!result.success) {
-		const errorMessage = result.error.errors;
-		const error = createError(400, JSON.stringify(errorMessage));
-		error.isOperational = true;
-		throw error;
-	}
-};

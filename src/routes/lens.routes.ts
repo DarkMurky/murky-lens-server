@@ -16,15 +16,14 @@ import {
 	zodGetLenseSchema,
 	zodUpdateLenseSchema,
 } from "@constants/zodSchema";
-import requireUser from "@middleware/requireUser";
 
 const router = Router();
 const BASE_PATH = "/api/lenses";
 
-router.get(BASE_PATH, requireUser, getAllLensHandler);
+router.get(BASE_PATH, getAllLensHandler);
 
 router.get(
-	`${BASE_PATH}/:id`,
+	`${BASE_PATH}/:id`, // Use the constant here
 	(req, _, next) => {
 		validateGetLens(req, zodGetLenseSchema);
 		next();
@@ -33,8 +32,7 @@ router.get(
 );
 
 router.put(
-	`${BASE_PATH}/:id`,
-	requireUser,
+	`${BASE_PATH}/:id`, // Use the constant here
 	(req, _, next) => {
 		validateUpdateLens(req, zodUpdateLenseSchema);
 		next();
@@ -43,8 +41,7 @@ router.put(
 );
 
 router.post(
-	BASE_PATH,
-	requireUser,
+	BASE_PATH, // Use the constant here
 	(req, _, next) => {
 		validateCreateLens(req, zodCreateLenseSchema);
 		next();
@@ -53,8 +50,7 @@ router.post(
 );
 
 router.delete(
-	`${BASE_PATH}/:id`,
-	requireUser,
+	`${BASE_PATH}/:id`, // Use the constant here
 	(req, _, next) => {
 		validateDeleteLens(req, zodDeleteLenseSchema);
 		next();
