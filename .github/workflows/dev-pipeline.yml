@@ -79,7 +79,6 @@ jobs:
         id: install_terraform
 
       - name: Set up helm
-        name: Set up helm
         uses: azure/setup-helm@v4.2.0
         with:
           version: v3.17.0
