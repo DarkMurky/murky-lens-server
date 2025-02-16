@@ -30,10 +30,6 @@ jobs:
       - name: Create .env file
         run: |
           echo "NODE_ENV=development" >> .env
-          echo "ACCESS_TOKEN_PRIVATE_KEY=${{ secrets.ACCESS_TOKEN_PRIVATE_KEY }}" >> .env
-          echo "ACCESS_TOKEN_PUBLIC_KEY=A${{ secrets.ACCESS_TOKEN_PUBLIC_KEY }}" >> .env
-          echo "REFRESH_PRIVATE_KEY=${{ secrets.REFRESH_PRIVATE_KEY }}" >> .env
-          echo "REFRESH_PUBLIC_KEY=${{ secrets.REFRESH_PUBLIC_KEY }}" >> .env
           echo "PORT=3001" >> .env
           POSTGRES_USER=$(echo "${{ secrets.POSTGRES_USER }}" | base64 --decode)
           POSTGRES_PASSWORD=$(echo "${{ secrets.POSTGRES_PASSWORD }}" | base64 --decode)
@@ -75,20 +71,7 @@ jobs:
       - name: Set up Terraform
         uses: hashicorp/setup-terraform@v1
         with:
-            terraform_version: 1.10.5
-        id: install_terraform
-
-      - name: Set up helm
-        uses: azure/setup-helm@v4.2.0
-        with:
-          version: v3.17.0
-        id: install_helm
-
-      - name: Setup kubectl
-        uses: azure/setup-kubectl@v4
-        with:
-          version: v1.32.1
-        id: install_kubectl
+            terraform_version: 1.10.4
 
       - name: Terraform init and validate
         working-directory: ./k8s/terraform
@@ -125,8 +108,8 @@ jobs:
       - name: Create secrets file
         working-directory: ./k8s/murky-view-chart
         run: |
-          echo "db-user: ${{ secrets.POSTGRES_USER}}" > secrets
-          echo "db-pass: ${{ secrets.POSTGRES_PASSWORD }}" >> secrets
+          echo "db-user: ${{ secrets.DATABASE_USER}}" > secrets
+          echo "db-pass: ${{ secrets.DATABASE_PASSWORD }}" >> secrets
 
       - name: Deploy with Helm
         run: |
