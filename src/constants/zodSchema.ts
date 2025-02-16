@@ -31,3 +31,19 @@ export const zodUpdateLenseSchema = z.object({
 });
 
 export const zodDeleteLenseSchema = z.object(lensIdSchema);
+
+export const zodLoginSchema = z.object({
+    email: z.string()
+        .trim()
+        .email("Invalid email format.")
+        .nonempty("Email is required"),
+    password: z.string().nonempty("Password is required"),
+});
+
+export const zodRegisterSchema = z.object({
+    email: z.string()
+        .trim()
+        .email("Invalid email format.")
+        .nonempty("Email is required"),
+    password: z.string().nonempty("Password is required"),
+});
