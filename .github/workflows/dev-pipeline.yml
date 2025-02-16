@@ -85,7 +85,7 @@ jobs:
           version: v3.17.0
         id: install_helm
 
-      - name Setup kubectl
+      - name: Setup kubectl
         uses: azure/setup-kubectl@v4
         with:
           version: v1.32.1
