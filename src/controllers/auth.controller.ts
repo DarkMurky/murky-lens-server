@@ -2,39 +2,55 @@ import type { Prisma } from "@prisma/client";
 import { createSession, createUser, findUserByEmail, signAccessToken, signRefreshToken } from "@services/auth.service";
 import hashPassword from "@utils/hashPassword";
 import { validatePassword } from "@utils/validatePassword";
-import type { Request, RequestHandler, Response } from "express";
+import type { NextFunction, Request, RequestHandler, Response } from "express";
 import createError from "http-errors";
 import { omit } from "lodash";
 
-export const createUserHandler: RequestHandler = async (req, res) => {
-	const { password, ...body } = req.body;
+export const createUserHandler: RequestHandler = async (req: Request, res: Response, next: NextFunction) => {
+	const { password, email } = req.body;
+
+	const userAlreadyExists: Prisma.UserUncheckedCreateInput | null = await findUserByEmail(email);
+
+	try {
+		if (userAlreadyExists){
+			const error = createError(403, JSON.stringify("User already exists"));
+			error.isOperational = true;
+			throw error;
+		}
+	} catch (error) {
+		return next(error)
+	}
 
 	const hashedPassword = await hashPassword(password);
 
-	// Not checking if the user exists because there is already a property in the model that states the username must be unique, which we have also handled in the global error handler
-	await createUser({ ...body, password: hashedPassword });
+	await createUser({ email, password: hashedPassword });
 
 	res.status(200).json({ success: true, message: "User registered" });
 };
 
-export const createSessionHandler: RequestHandler = async (req: Request, res: Response) => {
+export const createSessionHandler: RequestHandler = async (req: Request, res: Response, next: NextFunction) => {
 	const { email, password } = req.body;
+
 	const message = "Wrong email or password";
 
 	const user: Prisma.UserUncheckedCreateInput | null = await findUserByEmail(email);
 
-	if (!user) {
-		const error = createError(404, JSON.stringify(message));
-		error.isOperational = true;
-		throw error;
-	}
-
-	const isValid = await validatePassword(user.password, password);
-
-	if (!isValid) {
-		const error = createError(401, JSON.stringify(message));
-		error.isOperational = true;
-		throw error;
+	try {
+		if (!user) {
+			const error = createError(404, JSON.stringify(message));
+			error.isOperational = true;
+			throw error;
+		}
+		const isValid = await validatePassword(user.password, password);
+	
+		if (!isValid) {
+			const error = createError(401, JSON.stringify(message));
+			error.isOperational = true;
+			throw error;
+		}
+	
+	} catch (error) {
+		return next(error)
 	}
 
 	const session = await createSession(user);
@@ -67,7 +83,7 @@ export const createSessionHandler: RequestHandler = async (req: Request, res: Re
 	});
 };
 
-export const logoutSessionHandler: RequestHandler = async (req, res) => {
+export const logoutSessionHandler: RequestHandler = async (req: Request, res: Response) => {
 	res.locals.user = null;
 
 	res.clearCookie("access-token").clearCookie("refresh-token").status(200).json({
