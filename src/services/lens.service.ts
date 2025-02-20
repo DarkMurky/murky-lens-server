@@ -22,7 +22,11 @@ export function updateLens(input: Prisma.LensCreateInput, id: string) {
 }
 
 export function getAllLenses() {
-	return prisma.lens.findMany();
+    return prisma.lens.findMany({
+        orderBy: {
+            id: 'asc',
+        },
+    });
 }
 
 export function getLense(id: string) {
