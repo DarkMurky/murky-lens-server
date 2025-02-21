@@ -132,3 +132,6 @@ jobs:
         run: |
           kubectl get ns ${{ env.ENVIRONMENT }} || kubectl create ns ${{ env.ENVIRONMENT }}
           helm upgrade --install ${{ env.HELM_RELEASE_NAME }} ./k8s/murky-view-chart -f ./k8s/murky-view-chart/values-${{ env.ENVIRONMENT }}.yml
+
+      - name: Restart deployments to sync to the latest images
+        run: kubectl rollout restart deploy -n ${{ env.ENVIRONMENT }}
